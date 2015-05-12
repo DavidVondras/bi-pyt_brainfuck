@@ -17,11 +17,15 @@ class BrainFuck:
             else:
 				self.memory[self.memoryPtr] = 0
 
-        elif c[c_i] == '-':
+        elif bChar == '-':
             if self.memory[self.Ptr] != 0:
 				self.memory[self.Ptr] -= 1
             else:
 				self.memory[self.Ptr] = 255
+		elif bChar == '>':
+			self.memoryPtr += 1
+			if len(self.memory) == self.memoryPtr:
+				self.memory += bytearray([0])		
 	
 	def interpreter( self, bcode ):
 		print(bcode)
