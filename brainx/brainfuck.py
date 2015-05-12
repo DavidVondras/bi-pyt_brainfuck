@@ -31,7 +31,7 @@ class BrainFuck:
                 if self.memory[self.memoryPtr] == -1:
                     self.memory[self.memoryPtr] = 255
             if bcode[i] == '.':
-                sys.stdout.write(chr(self.memory[self.memoryPtr]))
+                print(chr(self.memory[self.memoryPtr]))
                 self.output += chr(self.memory[self.memoryPtr])
             if bcode[i] == ',':
                 self.memory[self.memoryPtr] = ord(self.getchar())
