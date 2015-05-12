@@ -1,31 +1,29 @@
 # -*- coding: utf-8 -*-
-import brainfuck
-
 
 class BrainLoller():
 
     def getChars(self, color, m):
-        o = ''
+        ch = ''
         if color == (255, 0, 0):
-            o = '>'
+            ch = '>'
         if color == (128, 0, 0):
-            o = '<'
+            ch = '<'
         if color == (0, 255, 0):
-            o = '+'
+            ch = '+'
         if color == (0, 128, 0):
-            o = '-'
+            ch = '-'
         if color == (0, 0, 255):
-            o = '.'
+            ch = '.'
         if color == (0, 0, 128):
-            o = ','
+            ch = ','
         if color == (255, 255, 0):
-            o = '['
+            ch = '['
         if color == (128, 128, 0):
-            o = ']'
+            ch = ']'
         if color == (0, 255, 255):
             m = self._turn(m, "right")
         if color == (0, 128, 128):
             m = self._turn(m, "left")
-        return o, m
+        return ch, m
 
 
