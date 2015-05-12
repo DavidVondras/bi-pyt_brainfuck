@@ -10,8 +10,20 @@ class BrainFuck:
 		
 		self.interpreter(self.bcode)
 	
+	def calcMemory( bChar ):
+		 if bChar == '+':
+            if self.memory[self.memoryPtr] != 255:
+				self.memory[self.memoryPtr] += 1
+            else:
+				self.memory[self.memoryPtr] = 0
+
+        elif c[c_i] == '-':
+            if self.memory[self.Ptr] != 0:
+				self.memory[self.Ptr] -= 1
+            else:
+				self.memory[self.Ptr] = 255
+	
 	def interpreter( self, bcode ):
 		print(bcode)
 		for i in range(0, len(bcode)):
-			#print(bcode[i])
-			self.calcMemory
+			self.calcMemory(bcode[i])
