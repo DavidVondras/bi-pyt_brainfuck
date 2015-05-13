@@ -39,26 +39,7 @@ class BrainCopter():
 
     def getChars(self, color, m):
         ch = ''
-        if color == (255, 0, 0):
-            ch = '>'
-        if color == (128, 0, 0):
-            ch = '<'
-        if color == (0, 255, 0):
-            ch = '+'
-        if color == (0, 128, 0):
-            ch = '-'
-        if color == (0, 0, 255):
-            ch = '.'
-        if color == (0, 0, 128):
-            ch = ','
-        if color == (255, 255, 0):
-            ch = '['
-        if color == (128, 128, 0):
-            ch = ']'
-        if color == (0, 255, 255):
-            m = self.turn("r", m)
-        if color == (0, 128, 128):
-            m = self.turn("l", m)
+        
         return ch, m
 
 if __name__ == "__main__":
