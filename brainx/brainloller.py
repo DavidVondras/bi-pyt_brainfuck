@@ -1,6 +1,9 @@
 # -*- coding: utf-8 -*-
 
+
 class BrainLoller():
+    def readImage(self, filename):
+        print("ctu" + filename)
 
     def getChars(self, color, m):
         ch = ''
@@ -27,3 +30,5 @@ class BrainLoller():
         return ch, m
 
 
+if __name__ == "__main__":
+    BrainLoller.readImage("../tests/HelloWord.png")
