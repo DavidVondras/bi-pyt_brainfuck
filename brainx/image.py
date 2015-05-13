@@ -30,6 +30,8 @@ class ImagePng():
             if (c['head'] == b'IHDR'):
                 ihdr = c['data']
                 break
+        self.width = self.getBytes(ihdr[0:4])
+        self.height = self.getBytes(ihdr[4:8])
         if self.getBytes(ihdr[8:9]) != 8 \
         or self.getBytes(ihdr[9:10]) != 2 \
         or self.getBytes(ihdr[10:11]) != 0 \
@@ -42,3 +44,31 @@ class ImagePng():
                 idat += c['data']
 
         idat = zlib.decompress(idat)
+        self.rgb = []
+        p = 0
+        for row in range(0,self.height):
+            pngF = idat[p]
+            p += 1
+            line = []
+            left = (0,0,0)
+            upleft = (0,0,0)
+            for c in range(0,self.width):
+                pi = (idat[p],idat[p+1],idat[p+2])
+                p += 3
+                if (pngF == 0):
+                    left = pi
+                    line += [pi]
+                elif (pngF == 1):
+                    left = self.pixelTG(left,pi)
+                    line += [left]
+                elif (pngF == 2):
+                    left = self.pixelTG(pi,self.rgb[len(self.rgb)-1][c])
+                    line += [left]
+
+                elif (pngF == 4):
+                    up = self.rgb[len(self.rgb)-1][c]
+                    current = self.pixelTG(pi, left, up, upleft)
+                    line += [current]
+                    left = current
+                    upleft = up
+            self.rgb += [line]
