@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-
+import zlib
 
 class PNGWrongHeaderError(Exception):
     pass
@@ -21,3 +21,9 @@ class ImagePng():
             p += 4
             self.data += [{'head':self.imageValues[p:p + 4], 'data':self.imageValues[p + 4:p + l + 4]}]
             p += (l + 8)
+        idat = b''
+        for c in self.data:
+            if (c['head'] == b'IDAT'):
+                idat += c['data']
+
+        idat = zlib.decompress(idat)
