@@ -23,7 +23,9 @@ class BrainCopter():
         return ret
 
     def out(self, p):
-        return p[0] == len(self.rgb) or p[1] == len(self.rgb[0]) or p[0] < 0 or p[1] < 0
+        lenJ = len(self.rgb)
+        lenD = len(self.rgb[0])
+        return p[0] == lenJ or p[1] == lenD or p[0] < 0 or p[1] < 0
 
     def turn(self, d, vector):
         if d == "r":

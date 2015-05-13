@@ -52,7 +52,10 @@ class ImagePng():
         while p < len(self.imageValues):
             l = self.getBytes(self.imageValues[p:p + 4])
             p += 4
-            self.data += [{'head':self.imageValues[p:p + 4], 'data':self.imageValues[p + 4:p + l + 4]}]
+            x = self.imageValues[p:p + 4]
+            z = self.imageValues[p + 4:p + l + 4]
+            y = {'head': x, 'data': z}
+            self.data += [y]
             p += (l + 8)
         for c in self.data:
             if (c['head'] == b'IHDR'):

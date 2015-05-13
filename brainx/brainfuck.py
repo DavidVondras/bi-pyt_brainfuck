@@ -9,7 +9,8 @@ class BrainFuck:
         self.memory = bytearray(mem)
         self.memoryPtr = 0
         self.output = ""
-        self.bcode = "++++++++++[>+++++++>++++++++++>+++>+<<<<-]>++.>+.+++++++..+++.>++.<<+++++++++++++++.>.+++.------.--------.>+.>."
+        print(data)
+        self.bcode = data
         self.interpreter(self.bcode)
 
     def interpreter(self, bcode):
@@ -55,3 +56,9 @@ class BrainFuck:
             ret = self.user_input[0]
             self.user_input = self.user_input[1:]
             return ret
+
+if __name__ == "__main__":
+    data = "++++++++++[>+++++++>++++++++++>+++>+<<<<-]>++.>+.+++++++."
+    data += ".+++.>++.<<+++++++++++++++.>.+++.------.--------.>+.>."
+    print(data)
+    BrainFuck(data)
