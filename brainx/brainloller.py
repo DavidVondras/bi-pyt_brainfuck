@@ -1,11 +1,13 @@
 # -*- coding: utf-8 -*-
 
 import image
+import brainfuck
 
 
 class BrainLoller():
     def __init__(self, filename):
         self.data = self.getBrainLoller(filename)
+        brainfuck.BrainFuck(self.data)
 
     def readImage(self, filename):
         self.rgb = image.ImagePng(filename).rgb
@@ -61,4 +63,4 @@ class BrainLoller():
         return ch, m
 
 if __name__ == "__main__":
-    BrainLoller("../tests/HelloWord.png")
+    BrainLoller("../tests/HelloWorld.png")

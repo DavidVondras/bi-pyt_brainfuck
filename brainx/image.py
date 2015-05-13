@@ -18,7 +18,7 @@ class ImagePng():
             n = n * 256 + b
         return n
 
-    def pixelTG(self, a, left, up, ul):
+    def get(self, left, up, ul):
         res = tuple()
         for i in range(0, 3):
             p = (left[i] + up[i] - ul[i])
@@ -32,6 +32,10 @@ class ImagePng():
                 res += (up[i],)
             else:
                 res += (ul[i],)
+        return res
+
+    def pixelTG(self, a, res):
+
         x = (a[0] + res[0]) % 256
         z = (a[1] + res[1]) % 256
         y = (a[2] + res[2]) % 256
@@ -40,7 +44,7 @@ class ImagePng():
     def __init__(self, filename):
         fileImage = open(filename, mode='rb')
         self.imageValues = fileImage.read()
-        if (self.binary[:8] != b'\x89PNG\r\n\x1a\n'):
+        if (self.imageValues[:8] != b'\x89PNG\r\n\x1a\n'):
             raise PNGWrongHeaderError()
         self.imageValues = self.imageValues[8:]
         self.data = []
@@ -91,7 +95,7 @@ class ImagePng():
 
                 elif (pngF == 4):
                     up = self.rgb[len(self.rgb) - 1][c]
-                    current = self.pixelTG(pi, left, up, upleft)
+                    current = self.pixelTG(pi, self.get(left, up, upleft))
                     line += [current]
                     left = current
                     upleft = up
