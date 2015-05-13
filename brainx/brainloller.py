@@ -24,6 +24,18 @@ class BrainLoller():
     def out(self, p):
         return p[0] == len(self.rgb) or p[1] == len(self.rgb[0]) or p[0] < 0 or p[1] < 0
 
+    def turn(self, d, vector):
+        if d == "r":
+            if vector[0] == 0:
+                return vector[1], vector[0]
+            else:
+                return vector[1], -vector[0]
+        if d == "l":
+            if vector[0] != 0:
+                return vector[1], vector[0]
+            else:
+                return -vector[1], vector[0]
+
     def getChars(self, color, m):
         ch = ''
         if color == (255, 0, 0):
@@ -43,9 +55,9 @@ class BrainLoller():
         if color == (128, 128, 0):
             ch = ']'
         if color == (0, 255, 255):
-            m = self._turn(m, "right")
+            m = self.turn("r", m)
         if color == (0, 128, 128):
-            m = self._turn(m, "left")
+            m = self.turn("l", m)
         return ch, m
 
 if __name__ == "__main__":
