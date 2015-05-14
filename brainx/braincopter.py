@@ -5,51 +5,48 @@ import brainfuck
 
 class BrainCopter():
     def __init__(self, filename):
-        self.data = self.getBrainLoller(filename)
+        rgb = image.ImagePng(filename).rgb
+        ptr = (0, 0)
+        w = 0
+        self.data = ''
+        while True:
+            x = ptr[0]
+            y = ptr[1]
+            if x >= len(rgb) or x < 0 or y >= len(rgb[0]) or y < 0:
+                break
+            px = rgb[ptr[0]][ptr[1]]
+            c = (-2 * px[0] + 3 * px[1] + px[2]) % 11
+            if c == 0:
+                self.data += '>'
+            elif c == 1:
+                self.data += '<'
+            elif c == 2:
+                self.data += '+'
+            elif c == 3:
+                self.data += '-'
+            elif c == 4:
+                self.data += '.'
+            elif c == 5:
+                self.data += ','
+            elif c == 6:
+                self.data += '['
+            elif c == 7:
+                self.data += ']'
+            elif c == 8:
+                w += 1
+                w %= 4
+            elif c == 9:
+                w -= 1
+                w %= 4
+            if w == 0:
+                ptr = ptr[0], ptr[1] + 1
+            elif w == 1:
+                ptr = ptr[0] + 1, ptr[1]
+            elif w == 2:
+                ptr = ptr[0], ptr[1] - 1
+            else:
+                ptr = ptr[0] - 1, ptr[1]
         brainfuck.BrainFuck(self.data)
 
-    def readImage(self, filename):
-        self.rgb = image.ImagePng(filename).rgb
-
-    def getBrainLoller(self, filename):
-        self.readImage(filename)
-        start = 0, 0
-        m = 0, 1
-        ret = ''
-        while not self.out(start):
-            o, m = self.getChars(self.rgb[start[0]][start[1]], m)
-            ret += o
-            start = start[0] + m[0], start[1] + m[1]
-        return ret
-
-    def out(self, p):
-        lenJ = len(self.rgb)
-        lenD = len(self.rgb[0])
-        return p[0] == lenJ or p[1] == lenD or p[0] < 0 or p[1] < 0
-
-    def turn(self, d, vector):
-        if d == "r":
-            if vector[0] == 0:
-                return vector[1], vector[0]
-            else:
-                return vector[1], -vector[0]
-        if d == "l":
-            if vector[0] != 0:
-                return vector[1], vector[0]
-            else:
-                return -vector[1], vector[0]
-
-    def getChars(self, color, m):
-        ch = ''
-        com = (-2 * color[0] + 3 * color[1] + color[2]) % 11
-        bf = '><+-.,[]'
-        if com < 8:
-            ch = bf[com]
-        if com == 8:
-            m = self.turn("r", m)
-        if com == 9:
-            m = self.turn("l", m)
-        return ch, m
-
 if __name__ == "__main__":
-    BrainCopter("../tests/HelloWorld.png")
+    BrainCopter("../tests/sachovnice.png")

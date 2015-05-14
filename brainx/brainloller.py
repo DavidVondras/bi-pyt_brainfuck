@@ -65,4 +65,4 @@ class BrainLoller():
         return ch, m
 
 if __name__ == "__main__":
-    BrainLoller("../tests/HelloWorld.png")
+    BrainLoller("../tests/sachovnice.png")
