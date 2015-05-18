@@ -9,13 +9,17 @@ class BrainCopter():
         ptr = (0, 0)
         w = 0
         self.data = ''
+
+        cislo = 0
         while True:
             x = ptr[0]
             y = ptr[1]
+            print(str(x) + ">=" + str(len(rgb)) + " or " + str(x) +"<0 or " + str(y) + ">=" + str(len(rgb[0])))
             if x >= len(rgb) or x < 0 or y >= len(rgb[0]) or y < 0:
                 break
             px = rgb[ptr[0]][ptr[1]]
             c = (-2 * px[0] + 3 * px[1] + px[2]) % 11
+            cislo += 1
             if c == 0:
                 self.data += '>'
             elif c == 1:
@@ -47,6 +51,5 @@ class BrainCopter():
             else:
                 ptr = ptr[0] - 1, ptr[1]
         brainfuck.BrainFuck(self.data)
-
 if __name__ == "__main__":
-    BrainCopter("../tests/sachovnice.png")
+    BrainCopter("../tests/lk.png")

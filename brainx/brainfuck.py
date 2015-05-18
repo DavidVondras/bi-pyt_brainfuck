@@ -16,6 +16,7 @@ class BrainFuck:
     def interpreter(self, bcode):
         i = 0
         while i < len(bcode):
+            print(str(len(bcode)) + " " + str(i))
             if bcode[i] == '>':
                 self.memoryPtr += 1
                 if len(self.memory) == self.memoryPtr:
