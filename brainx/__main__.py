@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-import brainfuck as brfuck
-import brainloller as br
+import brainfuck
+import brainloller
+import braincopter
 import sys
 
 
@@ -33,12 +34,13 @@ def main(argv=None):
         parser.error(opt3)
     if options.fuck and options.copter:
         parser.error(opt4)
-    try:
-        with open(args[0]):
-            pass
-    except IOError:
-        parser.error(args[0] + ' is not a file or it cannot be opened')
+    if options.loller:
+        brainloller.BrainLoller(args[0])
+    elif options.copter:
+        braincopter.BrainCopter(args[0])
+    else:
+        brainfuck.BrainFuck(args[0])
 
 if __name__ == "__main__":
-    print("main")
+    #print("main")
     sys.exit(main())

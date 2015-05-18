@@ -6,6 +6,7 @@ import brainfuck
 
 class BrainLoller():
     def __init__(self, filename):
+        print("brainloller")
         self.data = self.getBrainLoller(filename)
         brainfuck.BrainFuck(self.data)
 

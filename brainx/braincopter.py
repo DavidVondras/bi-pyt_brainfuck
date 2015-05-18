@@ -14,7 +14,6 @@ class BrainCopter():
         while True:
             x = ptr[0]
             y = ptr[1]
-            print(str(x) + ">=" + str(len(rgb)) + " or " + str(x) +"<0 or " + str(y) + ">=" + str(len(rgb[0])))
             if x >= len(rgb) or x < 0 or y >= len(rgb[0]) or y < 0:
                 break
             px = rgb[ptr[0]][ptr[1]]
