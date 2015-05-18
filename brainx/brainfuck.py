@@ -8,15 +8,19 @@ class BrainFuck:
         mem = b'\x00'
         self.memory = bytearray(mem)
         self.memoryPtr = 0
+        try:
+            with open(data, mode='r') as f:
+                self.code = f.read()
+        except:
+            self.code = data
         self.output = ""
-        print(data)
-        self.bcode = data
-        self.interpreter(self.bcode)
+        print(self.code)
+        self.interpreter(self.code)
 
     def interpreter(self, bcode):
         i = 0
         while i < len(bcode):
-            print(str(len(bcode)) + " " + str(i))
+            print((str(len(bcode)) + " " + str(i)))
             if bcode[i] == '>':
                 self.memoryPtr += 1
                 if len(self.memory) == self.memoryPtr:
@@ -43,7 +47,8 @@ class BrainFuck:
                     self.interpreter(code)
                 i += len(code) + 1
             i += 1
-
+        print(self.output)
+        
     def cycle(self, bcode):
         end = 1
         while (bcode[0:end].count('[') != bcode[0:end].count(']')):
@@ -59,7 +64,8 @@ class BrainFuck:
             return ret
 
 if __name__ == "__main__":
-    data = "++++++++++[>+++++++>++++++++++>+++>+<<<<-]>++.>+.+++++++."
-    data += ".+++.>++.<<+++++++++++++++.>.+++.------.--------.>+.>."
+    #data = "++++++++++[>+++++++>++++++++++>+++>+<<<<-]>++.>+.+++++++."
+    #data += ".+++.>++.<<+++++++++++++++.>.+++.------.--------.>+.>."
+    data = "../tests/hello1.b"
     print(data)
     BrainFuck(data)
