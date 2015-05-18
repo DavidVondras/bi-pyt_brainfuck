@@ -33,6 +33,11 @@ def main(argv=None):
         parser.error(opt3)
     if options.fuck and options.copter:
         parser.error(opt4)
+    try:
+        with open(args[0]):
+            pass
+    except IOError:
+        parser.error(args[0] + ' is not a file or it cannot be opened')
 
 if __name__ == "__main__":
     print("main")
