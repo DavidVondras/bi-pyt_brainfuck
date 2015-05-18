@@ -18,8 +18,22 @@ def main(argv=None):
     parser.add_option('-c', '--copter', action='store_true', dest='copter',
                         help='use the BrainCopter interpreter')
     (options, args) = parser.parse_args()
+    opt = 'options --brainfuck, --brainloller'
+    opt += 'and --braincopter are mutually exclusive'
+    opt2 = 'options --brainloller and --braincopter are mutually exclusive'
+    opt3 = 'options --brainfuck and --brainloller are mutually exclusive'
+    opt4 = 'options --brainfuck and --braincopter are mutually exclusive'
     if len(args) < 1:
         parser.error('to few arguments')
+    if options.fuck and options.copter and options.loller:
+        parser.error(opt)
+    if options.loller and options.copter:
+        parser.error(opt2)
+    if options.fuck and options.loller:
+        parser.error(opt3)
+    if options.fuck and options.copter:
+        parser.error(opt4)
+
 if __name__ == "__main__":
     print("main")
     sys.exit(main())
