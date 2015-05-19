@@ -25,22 +25,26 @@ def main(argv=None):
     opt3 = 'options --brainfuck and --brainloller are mutually exclusive'
     opt4 = 'options --brainfuck and --braincopter are mutually exclusive'
     if len(args) < 1:
-        parser.error('to few arguments')
-    if options.fuck and options.copter and options.loller:
-        parser.error(opt)
-    if options.loller and options.copter:
-        parser.error(opt2)
-    if options.fuck and options.loller:
-        parser.error(opt3)
-    if options.fuck and options.copter:
-        parser.error(opt4)
-    if options.loller:
-        brainloller.BrainLoller(args[0])
-    elif options.copter:
-        braincopter.BrainCopter(args[0])
+        #parser.error('to few arguments')
+        inputCode = input("Enter BrainFuck code: ")
+        print(inputCode)
+        brainfuck.BrainFuck(inputCode)
     else:
-        brainfuck.BrainFuck(args[0])
+        if options.fuck and options.copter and options.loller:
+            parser.error(opt)
+        if options.loller and options.copter:
+            parser.error(opt2)
+        if options.fuck and options.loller:
+            parser.error(opt3)
+        if options.fuck and options.copter:
+            parser.error(opt4)
+        if options.loller:
+            brainloller.BrainLoller(args[0])
+        elif options.copter:
+            braincopter.BrainCopter(args[0])
+        else:
+            brainfuck.BrainFuck(args[0])
 
 if __name__ == "__main__":
     #print("main")
-    sys.exit(main())
+    main()
