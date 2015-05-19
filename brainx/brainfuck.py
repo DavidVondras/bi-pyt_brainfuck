@@ -3,11 +3,9 @@ import sys
 
 class BrainFuck:
 
-    def __init__(self, data, memory=b'\x00', pointer=0):
+    def __init__(self, data, memory=b'\x00', pointer=0, test=0):
         self.data = data
-        print(data)
-        mem = memory
-        self.memory = bytearray(mem)
+        self.memory = bytearray(memory)
         self.memoryPtr = pointer
         try:
             with open(data, mode='r') as f:
@@ -15,10 +13,10 @@ class BrainFuck:
         except:
             self.code = data
         self.output = ""
-        #self.clearCode()
         self.user_input = self.findExp()
         self.interpreter(self.code)
-        #print((self.memory))
+        if test == 1:
+            self.getTest()
 
     def clearCode(self):
         chars = ['.', ',', '[', ']', '<', '>', '+', '-', '#', '!']
@@ -31,7 +29,6 @@ class BrainFuck:
     def interpreter(self, bcode):
         i = 0
         while i < len(bcode):
-            #print((str(len(bcode)) + " " + str(i)))
             if bcode[i] == '>':
                 self.memoryPtr += 1
                 if len(self.memory) == self.memoryPtr:
@@ -92,6 +89,23 @@ class BrainFuck:
         while (bcode[0:end].count('[') != bcode[0:end].count(']')):
             end += 1
         return bcode[1:end - 1]
+
+    def getTest(self):
+        self.clearCode()
+        memStr = str(self.memory)
+        memStr = memStr.replace('bytearray(', '')
+        memStr = memStr.replace(')', '')
+        f = open('workfile', 'w')
+        deb = "# program data\n"
+        deb += self.code + "\n\n"
+        deb += "# memory\n"
+        deb += memStr + "\n\n"
+        deb += "# memory pointer\n"
+        deb += str(self.memoryPtr) + "\n\n"
+        deb += "# output\n"
+        deb += "b'" + self.output + "'\n\n"
+        f.write(deb)
+        f.close
 
     def getchar(self):
         if len(self.user_input) == 0:
