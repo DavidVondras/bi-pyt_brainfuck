@@ -5,10 +5,16 @@ import brainfuck
 
 
 class BrainLoller():
-    def __init__(self, filename):
-        #print("brainloller")
+    def __init__(self, filename, printCode="", printOut=0):
         self.data = self.getBrainLoller(filename)
-        brainfuck.BrainFuck(self.data)
+        if printCode == "":
+            if printOut == 0:
+                brainfuck.BrainFuck(self.data)
+            else:
+                print((self.data))
+        else:
+            f = open(printCode, 'w')
+            f.write(self.data)
 
     def readImage(self, filename):
         self.rgb = image.ImagePng(filename).rgb

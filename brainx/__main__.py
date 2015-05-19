@@ -16,6 +16,7 @@ def main(argv=None):
     hlMemory = 'use the BrainFuck interpreter with memory input'
     hlPointer = 'use the BrainFuck interpreter with pointer input'
     hlconvert1 = 'use the converter BrainLoller to BrainFuck'
+    hlconvert1 = 'use the converter BrainFuck to BrainLoller'
     pointH = '--memory-pointer'
     parser = OptionParser(usage=us, version="%prog 1.0")
     parser.add_option('-f', '--brainfuck', action='store_true',
@@ -32,7 +33,9 @@ def main(argv=None):
                         help=hlPointer)
     parser.add_option('--lc2f', action='store_true', dest='convertlToF',
                         help=hlconvert1)
-    print(parser.parse_args())
+    parser.add_option('--f2lc', action='store_true', dest='convertfToL',
+                        help=hlconvert2)
+
     (options, args) = parser.parse_args()
     opt = 'options --brainfuck, --brainloller'
     opt += 'and --braincopter are mutually exclusive'
@@ -40,11 +43,10 @@ def main(argv=None):
     opt3 = 'options --brainfuck and --brainloller are mutually exclusive'
     opt4 = 'options --brainfuck and --braincopter are mutually exclusive'
     if len(args) < 1:
-        #parser.error('to few arguments')
         inputCode = input("Enter BrainFuck code: ")
         print(inputCode)
         brainfuck.BrainFuck(inputCode)
-    else: 
+    else:
         if options.fuck and options.copter and options.loller:
             parser.error(opt)
         if options.loller and options.copter:
@@ -53,12 +55,17 @@ def main(argv=None):
             parser.error(opt3)
         if options.fuck and options.copter:
             parser.error(opt4)
-        if not options.convertlToF and options.loller or ".png" in args[0]:
-            print("nic nedelam")
-            brainloller.BrainLoller(args[0])
-        elif options.convertlToF:
-            print("konvertuju")
-            print(len(args))# + " " + args[1])
+        if options.loller or ".png" in args[0] or options.convertlToF:
+            #print("asdqwerwer")
+            if options.convertlToF:
+                if args == 2:
+                    brainloller.BrainLoller(args[0], args[1])
+                else:
+                    brainloller.BrainLoller(args[0], "", 1)
+            else:
+                print("nekonvertuju")
+                brainloller.BrainLoller(args[0])
+            #print("nic nedelam")
         elif options.copter:
             braincopter.BrainCopter(args[0])
         elif options.mem and options.pointer:
@@ -91,6 +98,6 @@ def main(argv=None):
         else:
             brainfuck.BrainFuck(args[0])
 
+
 if __name__ == "__main__":
-    #print("main")
     main()
