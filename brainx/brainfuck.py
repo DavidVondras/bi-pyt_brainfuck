@@ -5,6 +5,7 @@ class BrainFuck:
 
     def __init__(self, data):
         self.data = data
+        print(data)
         mem = b'\x00'
         self.memory = bytearray(mem)
         self.memoryPtr = 0
@@ -14,9 +15,17 @@ class BrainFuck:
         except:
             self.code = data
         self.output = ""
-        #print((self.code))
+        self.clearCode()
         self.interpreter(self.code)
         #print((self.output))
+
+    def clearCode(self):
+        chars = ['.', ',', '[', ']', '<', '>', '+', '-', '#', '!']
+        clearCodeData = self.code
+        self.code = ""
+        for i in range(0, len(clearCodeData)):
+            if clearCodeData[i] in chars:
+                self.code += clearCodeData[i]
 
     def interpreter(self, bcode):
         i = 0
@@ -53,13 +62,15 @@ class BrainFuck:
                 memStr = memStr.replace(')', '')
                 f = open('workfile', 'w')
                 deb = "# program data\n"
-                deb += self.code + "\n"
+                deb += self.code + "\n\n"
                 deb += "# memory\n"
-                deb += memStr + "\n"
+                deb += memStr + "\n\n"
                 deb += "# memory pointer\n"
-                deb += str(self.memoryPtr) + "\n"
+                deb += str(self.memoryPtr) + "\n\n"
                 deb += "# output\n"
-                deb += "b'" + self.output + "'\n"
+                deb += "b'" + self.output + "'\n\n"
+                f.write(deb)
+                f.close
             i += 1
 
     def cycle(self, bcode):
