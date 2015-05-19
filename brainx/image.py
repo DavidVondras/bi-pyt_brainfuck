@@ -1,14 +1,19 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 import zlib
+import sys
 
 
 class PNGWrongHeaderError(Exception):
-    pass
+    def __init__(self):
+        print("PNGWrongHeaderError")
+        sys.exit(4)
 
 
 class PNGNotImplementedError(Exception):
-    pass
+    def __init__(self):
+        print("PNGNotImplementedError")
+        sys.exit(8)
 
 
 class ImagePng():
@@ -103,3 +108,7 @@ class ImagePng():
                     left = current
                     upleft = up
             self.rgb += [line]
+
+
+if __name__ == "__main__":
+    ImagePng("tests/hello1.b")

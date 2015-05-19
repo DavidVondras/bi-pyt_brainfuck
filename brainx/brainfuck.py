@@ -13,6 +13,7 @@ class BrainFuck:
         except:
             self.code = data
         self.output = ""
+        self.debugIter = 1
         self.user_input = self.findExp()
         self.interpreter(self.code)
         if test == 1:
@@ -55,10 +56,15 @@ class BrainFuck:
                     self.interpreter(code)
                 i += len(code) + 1
             if bcode[i] == '#':
+                debugStr = ""
+                if self.debugIter < 10:
+                    debugStr = "0" + str(self.debugIter)
+                else:
+                    debugStr = str(self.debugIter)
                 memStr = str(self.memory)
                 memStr = memStr.replace('bytearray(', '')
                 memStr = memStr.replace(')', '')
-                f = open('workfile', 'w')
+                f = open('debug_' + debugStr + ".log", 'w')
                 deb = "# program data\n"
                 deb += self.code + "\n\n"
                 deb += "# memory\n"
@@ -91,11 +97,16 @@ class BrainFuck:
         return bcode[1:end - 1]
 
     def getTest(self):
+        debugStr = ""
+        if self.debugIter < 10:
+            debugStr = "0" + str(self.debugIter)
+        else:
+            debugStr = str(self.debugIter)
         self.clearCode()
         memStr = str(self.memory)
         memStr = memStr.replace('bytearray(', '')
         memStr = memStr.replace(')', '')
-        f = open('workfile', 'w')
+        f = open('debug_' + debugStr + ".log", 'w')
         deb = "# program data\n"
         deb += self.code + "\n\n"
         deb += "# memory\n"
@@ -117,4 +128,4 @@ class BrainFuck:
 
 if __name__ == "__main__":
     data = "../tests/hello1.b"
-    BrainFuck(data)
+    sys.exit(BrainFuck(data))
