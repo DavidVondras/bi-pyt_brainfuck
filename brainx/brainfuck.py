@@ -15,7 +15,8 @@ class BrainFuck:
         except:
             self.code = data
         self.output = ""
-        self.clearCode()
+        #self.clearCode()
+        self.user_input = self.findExp()
         self.interpreter(self.code)
         #print((self.output))
 
@@ -72,6 +73,19 @@ class BrainFuck:
                 f.write(deb)
                 f.close
             i += 1
+
+    def findExp(self):
+        """finfing the stupid !"""
+        i = 0
+        while i < len(self.code) and self.code[i] != '!':
+            i += 1
+
+        if i + 1 < len(self.code):
+            ret = self.code[i + 1:]
+            self.code = self.code[:i]
+            return ret
+
+        return ''
 
     def cycle(self, bcode):
         end = 1
