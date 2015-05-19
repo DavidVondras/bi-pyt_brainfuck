@@ -3,12 +3,12 @@ import sys
 
 class BrainFuck:
 
-    def __init__(self, data):
+    def __init__(self, data, memory=b'\x00', pointer=0):
         self.data = data
         print(data)
-        mem = b'\x00'
+        mem = memory
         self.memory = bytearray(mem)
-        self.memoryPtr = 0
+        self.memoryPtr = pointer
         try:
             with open(data, mode='r') as f:
                 self.code = f.read()
@@ -18,7 +18,7 @@ class BrainFuck:
         #self.clearCode()
         self.user_input = self.findExp()
         self.interpreter(self.code)
-        #print((self.output))
+        #print((self.memory))
 
     def clearCode(self):
         chars = ['.', ',', '[', ']', '<', '>', '+', '-', '#', '!']

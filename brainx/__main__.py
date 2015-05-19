@@ -4,13 +4,15 @@
 import brainfuck
 import brainloller
 import braincopter
-import sys
+#import sys
 
 
 def main(argv=None):
     from optparse import OptionParser
     us = 'usage: %prog [options] FILE'
     hlBrainFuck = 'use the BrainFuck interpreter [default]'
+    hlMemory = 'use the BrainFuck interpreter with memory input'
+    hlPointer = 'use the BrainFuck interpreter with pointer input'
     parser = OptionParser(usage=us, version="%prog 1.0")
     parser.add_option('-b', '--brainfuck', action='store_true',
                         dest='fuck', help=hlBrainFuck)
@@ -18,6 +20,10 @@ def main(argv=None):
                         dest='loller', help='use the BrainLoller interpreter')
     parser.add_option('-c', '--copter', action='store_true', dest='copter',
                         help='use the BrainCopter interpreter')
+    parser.add_option('-m', '--memory', action='store_true', dest='mem',
+                        help=hlMemory)
+    parser.add_option('-p', '--pointer', action='store_true', dest='pointer',
+                        help=hlPointer)
     (options, args) = parser.parse_args()
     opt = 'options --brainfuck, --brainloller'
     opt += 'and --braincopter are mutually exclusive'
@@ -42,7 +48,11 @@ def main(argv=None):
             brainloller.BrainLoller(args[0])
         elif options.copter:
             braincopter.BrainCopter(args[0])
+        elif options.mem and options.pointer:
+            print("---" + args[1] + " " + args[2])
+            brainfuck.BrainFuck(args[0])
         else:
+            print("bez memory")
             brainfuck.BrainFuck(args[0])
 
 if __name__ == "__main__":
