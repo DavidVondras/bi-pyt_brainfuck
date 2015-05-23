@@ -16,7 +16,7 @@ def main(argv=None):
     hlMemory = 'use the BrainFuck interpreter with memory input'
     hlPointer = 'use the BrainFuck interpreter with pointer input'
     hlconvert1 = 'use the converter BrainLoller to BrainFuck'
-    hlconvert1 = 'use the converter BrainFuck to BrainLoller'
+    hlconvert2 = 'use the converter BrainFuck to BrainLoller'
     pointH = '--memory-pointer'
     parser = OptionParser(usage=us, version="%prog 1.0")
     parser.add_option('-f', '--brainfuck', action='store_true',
@@ -44,9 +44,11 @@ def main(argv=None):
     opt4 = 'options --brainfuck and --braincopter are mutually exclusive'
     if len(args) < 1:
         inputCode = input("Enter BrainFuck code: ")
-        print(inputCode)
+        #print(inputCode)
         brainfuck.BrainFuck(inputCode)
     else:
+        if ".jpg" in args[0]:
+            brainloller.BrainLoller(args[0], "", 0)
         if options.fuck and options.copter and options.loller:
             parser.error(opt)
         if options.loller and options.copter:
@@ -58,36 +60,44 @@ def main(argv=None):
         if options.loller or ".png" in args[0] or options.convertlToF:
             #print("asdqwerwer")
             if options.convertlToF:
+                #print("2")
                 if args == 2:
-                    brainloller.BrainLoller(args[0], args[1])
+                    #print("3")
+                    brainloller.BrainLoller(args[0], args[1], 0, 0)
                 else:
-                    brainloller.BrainLoller(args[0], "", 1)
+                    #print(4)
+                    brainloller.BrainLoller(args[0], "", 1, 0)
             else:
-                print("nekonvertuju")
-                brainloller.BrainLoller(args[0])
+                #print("5")
+                #print("nekonvertuju")
+                if options.test:
+                    brainloller.BrainLoller(args[0], "", 0, 1)
+                else:
+                    brainloller.BrainLoller(args[0], "", 0)
             #print("nic nedelam")
         elif options.copter:
             braincopter.BrainCopter(args[0])
         elif options.mem and options.pointer:
             bb = args[1]
-            print(bb)
-            bb = bb.replace("b'", "")
+            #print(bb)
             bb = bb.replace("'", "")
+            bb = bb.replace("b", "")
             bb = bb.replace("\\x", "")
             bb = bb.replace("r", "")
-            print(bb)
             q = unhexlify(bb)
+            #print(q)
             if options.test:
                 brainfuck.BrainFuck(args[0], q, int(args[2]), 1)
             else:
                 brainfuck.BrainFuck(args[0], q, int(args[2]))
         elif options.mem:
             bb = args[1]
-            print(bb)
+            #print("---"+bb)
             bb = bb.replace("b'", "")
             bb = bb.replace("'", "")
             bb = bb.replace("\\x", "")
             bb = bb.replace("r", "")
+
             q = unhexlify(bb)
             if options.test:
                 brainfuck.BrainFuck(args[0], q, 0, 1)

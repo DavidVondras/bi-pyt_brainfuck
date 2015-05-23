@@ -6,13 +6,13 @@ import sys
 
 class PNGWrongHeaderError(Exception):
     def __init__(self):
-        print("PNGWrongHeaderError")
+        sys.stderr.write("PNGWrongHeaderError")
         sys.exit(4)
 
 
 class PNGNotImplementedError(Exception):
     def __init__(self):
-        print("PNGNotImplementedError")
+        sys.stderr.write("PNGNotImplementedError")
         sys.exit(8)
 
 

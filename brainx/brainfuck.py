@@ -1,9 +1,9 @@
 import sys
-
+#from __future__ import print_function
 
 class BrainFuck:
 
-    def __init__(self, data, memory=b'\x00', pointer=0, test=0):
+    def __init__(self, data, memory=b'\x00', pointer=0, test=0, end=0):
         self.data = data
         self.memory = bytearray(memory)
         self.memoryPtr = pointer
@@ -18,14 +18,21 @@ class BrainFuck:
         self.interpreter(self.code)
         if test == 1:
             self.getTest()
+        x = self.output
+        if x == '':
+            sys.stdout.write(x)
+            #print(x, end='')
+        if end == 0:
+            sys.exit(0)
 
     def clearCode(self):
         chars = ['.', ',', '[', ']', '<', '>', '+', '-', '#', '!']
         clearCodeData = self.code
-        self.code = ""
+        ret = ''
         for i in range(0, len(clearCodeData)):
             if clearCodeData[i] in chars:
-                self.code += clearCodeData[i]
+                ret += clearCodeData[i]
+        return ret
 
     def interpreter(self, bcode):
         i = 0
@@ -66,15 +73,20 @@ class BrainFuck:
                 memStr = memStr.replace(')', '')
                 f = open('debug_' + debugStr + ".log", 'w')
                 deb = "# program data\n"
-                deb += self.code + "\n\n"
+                deb += self.clearCode() + "\n\n"
                 deb += "# memory\n"
                 deb += memStr + "\n\n"
                 deb += "# memory pointer\n"
                 deb += str(self.memoryPtr) + "\n\n"
                 deb += "# output\n"
-                deb += "b'" + self.output + "'\n\n"
-                f.write(deb)
+                #f.write(deb)
+                #deb = self.output.encode()
+                #f.write(deb, end="")                
+                deb += str(self.output.encode())
+                #f.write(deb, end="")                   
+                f.write(deb + "\n\n")
                 f.close
+                self.debugIter += 1
             i += 1
 
     def findExp(self):
@@ -108,14 +120,17 @@ class BrainFuck:
         memStr = memStr.replace(')', '')
         f = open('debug_' + debugStr + ".log", 'w')
         deb = "# program data\n"
-        deb += self.code + "\n\n"
+        deb += self.clearCode() + "\n\n"
         deb += "# memory\n"
         deb += memStr + "\n\n"
         deb += "# memory pointer\n"
         deb += str(self.memoryPtr) + "\n\n"
         deb += "# output\n"
-        deb += "b'" + self.output + "'\n\n"
-        f.write(deb)
+        #f.write(deb)
+        deb += str(self.output.encode())
+        #f.write(deb, end="")                
+        f.write(deb + "\n\n")
+        #f.write(deb)
         f.close
 
     def getchar(self):

@@ -5,11 +5,42 @@ import brainfuck
 
 
 class BrainLoller():
-    def __init__(self, filename, printCode="", printOut=0):
+    def __init__(self, filename, printCode="", printOut=0, test=0):
+        self.test = []
         self.data = self.getBrainLoller(filename)
         if printCode == "":
             if printOut == 0:
-                brainfuck.BrainFuck(self.data)
+                if test == 0:
+                    brainfuck.BrainFuck(self.data)
+                else:
+                    #print("test")
+                    brainfuck.BrainFuck(self.data, b'\x00', 0, 1, 1)
+                    myfile = open("debug_01.log", "a")
+                    myfile.write("# RGB input\n")
+                    testOut = "[\n    ["
+                    y = 0
+                    for y in range(0, int(len(self.test) / self.width)):
+                        #print("------: " + str(y%2) + "   " + str(y))
+                        if y % 2 == 0:
+                            e = y * self.width + self.width
+                            #print(str(y * self.width) + " e: " + str(e))
+                            for i in range(y * self.width, e):
+                                testOut += self.test[i]
+                        else:
+                            i = y * self.width + self.width - 1
+                            while i >= y * self.width:
+                                #print(i/self.width)
+                            #for i in range(e, y * self.width):
+                                testOut += self.test[i]
+                                i -= 1
+                        testOut += "],\n    ["
+                        y = 0
+                    testOut = testOut.replace(")(", "), (")
+                    testOut += ']\n]\n\n'
+                    testOut = testOut.replace("\n    []", "")
+                    myfile.write(testOut)
+                    myfile.close()
+                #print(" "x.output)
             else:
                 print((self.data))
         else:
@@ -17,7 +48,9 @@ class BrainLoller():
             f.write(self.data)
 
     def readImage(self, filename):
-        self.rgb = image.ImagePng(filename).rgb
+        x = image.ImagePng(filename)
+        self.rgb = x.rgb
+        self.width = x.width
 
     def getBrainLoller(self, filename):
         self.readImage(filename)
@@ -50,26 +83,38 @@ class BrainLoller():
     def getChars(self, color, m):
         ch = ''
         if color == (255, 0, 0):
+            self.test.append("(255, 0, 0)")
             ch = '>'
-        if color == (128, 0, 0):
+        elif color == (128, 0, 0):
+            self.test.append("(128, 0, 0)")
             ch = '<'
-        if color == (0, 255, 0):
+        elif color == (0, 255, 0):
+            self.test.append("(0, 255, 0)")
             ch = '+'
-        if color == (0, 128, 0):
+        elif color == (0, 128, 0):
+            self.test.append("(0, 128, 0)")
             ch = '-'
-        if color == (0, 0, 255):
+        elif color == (0, 0, 255):
+            self.test.append("(0, 0, 255)")
             ch = '.'
-        if color == (0, 0, 128):
+        elif color == (0, 0, 128):
+            self.test.append("(0, 0, 128)")
             ch = ','
-        if color == (255, 255, 0):
+        elif color == (255, 255, 0):
+            self.test.append("(255, 255, 0)")
             ch = '['
-        if color == (128, 128, 0):
+        elif color == (128, 128, 0):
+            self.test.append("(128, 128, 0)")
             ch = ']'
-        if color == (0, 255, 255):
+        elif color == (0, 255, 255):
+            self.test.append("(0, 255, 255)")
             m = self.turn("r", m)
-        if color == (0, 128, 128):
+        elif color == (0, 128, 128):
+            self.test.append("(0, 128, 128)")
             m = self.turn("l", m)
+        else:
+            self.test.append("(0, 0, 0)")
         return ch, m
 
 if __name__ == "__main__":
-    BrainLoller("../tests/sachovnice.png")
+    BrainLoller("tests/sachovnice.png")
